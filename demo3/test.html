@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html style="background-color:#999;">
+<head>
+
+
+</head>
+
+<body style="background-color:#069;margin:100px; border:30px solid #093;">
+    <div style='margin:10px;border:10px solid white;width:300px;background:#F8CBAD;font-size:20px;font-weight:bold;'>
+        <div class='one' style='width:50px;height:50px;background-color:#FFE699;position:relative;top:5px;'></div>
+        <div class='two' style='height:50px;color:#fff;background-color:#C5E0B4;'>position:relative定位测试</div>
+    </div>
+
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">  
+$(function(){
+    $.ajax( 
+        {
+            type:'get',  
+            url : 'http://app.example.com/base/json.do?sid=1494&busiId=101',  
+            dataType : 'jsonp',  
+            jsonp:"jsoncallback",  
+            success  : function(data) {  
+                console.log(("用户名："+ data.user +" 密码："+ data.pass));  
+            },  
+            error : function() {  
+                console.log(('fail'));  
+            }  
+        }  
+    );  
+})
+</script>  
+</body>
+
+</html>

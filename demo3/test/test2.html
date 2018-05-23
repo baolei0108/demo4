@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>vue 例子</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="name" placeholder="你的名字">
+        <h1 v-cloak>你好，{{name}}</h1>
+        <h1>{{data | formatDate}}</h1>
+        <br />
+        <span v-html="link"></span>
+        <a v-bind:href="url">链接</a>
+        <button v-on:click="handleClose">点击隐藏</button>
+        <p v-if="show">显示这段文本</p>
+
+        <p>{{ reversedText }}</p>
+
+        <p>总价：{{ prices }}</p>
+
+        <p>姓名：{{fullName}}</p>
+
+        <p :class="{ 'active': isActive , 'error' : isError}">这里绑定了class</p>
+
+        <p v-show="status === 1">show 显示该行</p>
+        <p v-if="status === 1">当status为1时显示该行</p>
+        <p v-else-if="status === 2">当status为2时显示该行</p>
+        <p v-else="status === 3">否则显示该行</p>
+
+        <ul>
+            <li v-for="(book,index) in books">{{index}} - {{book.name}}</li>
+        </ul>
+
+        <my-componet message="eeffafa"></my-componet>
+
+        
+    </div>
+
+
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+<script>
+var padDate =function(value){
+    return value < 10 ? '0'+ value : value;  
+}
+
+Vue.component('my-componet',{
+    props: ['message'],
+    template: '<div>{{message}}</div>'
+
+})
+
+    var app=new Vue({
+        el:'#app',
+        data:{
+            name:'',
+            a:2,
+            data:new Date(),
+            timer:'',
+            link:'<a href="#">这是一个链接</a>',
+            show:true,
+            url:'https://www.github.com',
+            text: '123,456',
+            package1 : [
+                {
+                    name : "iphone 7",
+                    price : 7199,
+                    count : 2
+                },
+                {
+                    name : "iphone 8",
+                    price : 7299,
+                    count : 3
+                }
+
+            ],
+            package2 : [
+                {
+                    name : "apple",
+                    price : 8,
+                    count : 2
+                },
+                {
+                    name : "orangle",
+                    price : 6,
+                    count : 3
+                }
+
+            ],
+            firstName: 'Jack',
+            lastName: 'Green',
+            isActive: true,
+            isError: true,
+            status: 1,
+            books: [
+                {name: 'vue.js实战'},
+                {name: 'javascript 语言'},
+                {name: 'javascript高级程序设计'}
+            ]
+        },
+
+        filters:{
+            formatDate: function(value){
+               var date = new Date(value);
+               // console.log(date);
+               var year = date.getFullYear();
+               var month = padDate(date.getMonth() + 1);
+               var day=padDate(date.getDate());
+               var hours=padDate(date.getHours());
+               var minutes=padDate(date.getMinutes());
+               var seconds = padDate(date.getSeconds());
+
+               //return date;
+               return year + '-' + month + '-' + day + '-' + hours + ':' + minutes + ':' + seconds;
+
+            }
+
+        },
+
+        computed: {
+            reversedText: function(){
+                return this.text.split(',').reverse().join(',');
+            },
+            prices : function(){
+                var allPrince = 0;
+                for(var i = 0;i < this.package1.length; i ++){
+                    allPrince += this.package1[i].price * this.package1[i].count;
+                }
+
+                for(var i = 0;i < this.package2.length; i ++){
+                    allPrince += this.package2[i].price * this.package2[i].count;
+                }
+
+                return allPrince;
+            },
+            fullName: {
+                get: function(){
+                    return this.firstName + ' ' + this.lastName;
+                }
+
+            },
+
+
+        },
+
+        methods: {
+            handleClose: function(){
+                this.show=!this.show; //切换显示
+            },
+            
+
+        },
+
+        created:function(){
+            console.log(this.a);
+        },
+
+        mounted:function(){
+            //console.log(this.$el);
+            var _this=this;
+            this.timer=setInterval(function(){
+                _this.data=new Date();
+            },1000);
+        },
+
+        beforeDestory:function(){
+            if(this.timer){}
+        }
+    })
+
+    console.log(app.a);
+</script>
+
+<style>
+    .active{
+        color:red;
+    }
+
+    .error{
+        background:yellow;
+    }
+
+    [v-cloak] {
+        display: none;
+    }
+</style>
+</body>
+</html>
