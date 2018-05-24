@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <p>{{ message }}</p>
+
+<!-- 1 -->
+<div>
+    <span @click="mouseclick" id="first">first</span>
+    <span @click="mouseclick" id="second">second</span>
+    <span @click="mouseclick" id="third">third</span>
+
+    <template v-if="type==='first'">
+        <div style="background:red;">this is first</div>
+    </template>
+
+    <template v-if="type==='second'">
+        <div style="background:rgb(0, 255, 76);">this is second</div>
+    </template>
+
+    <template v-if="type==='third'">
+        <div style="background:yellow;">this is third</div>
+    </template>
+</div>
+
+
+<br /><br /><br /><br /><br />
+<!-- 2 -->
+<div>
+        <template>
+                <div class="tabs">
+                 <span class="tab" @click="toggleTab('prince')"><a>小王子</a></span>
+                 <span class="tab" @click="toggleTab('rose')"><a>小玫瑰</a></span>
+                 <span class="tab" @click="toggleTab('fox')"><a>小狐狸</a></span>
+                </div>
+
+                <component :is="currentTab" keep-alive></component>
+        </template>
+</div>
+
+
+
+
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  components:{
+    prince:{
+      template:"<div>this is 小王子</div>"
+    },
+    rose:{
+      template:"<div>this is 小玫瑰</div>"
+    },
+    fox:{
+      template:"<div>this is 小狐狸</div>"
+    }
+  },
+  data: {
+    message: 'Hello Vue.js!',
+    type: 'first',
+    currentTab:'prince'
+  },
+  methods:{
+    mouseclick(event){
+       //console.log(event.target.id);
+       if(event){
+            this.type=event.target.id;
+            console.log(this.type);
+       }
+    },
+    toggleTab(tag){
+        this.currentTab=tag;
+        console.log(this.currentTab);
+
+    }
+  }
+})
+</script>
+</body>
+</html>
